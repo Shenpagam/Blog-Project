@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --accent: #ffb84d; /* light orange-yellow */
+        --bg: #000000; /* black */
+        --text: var(--accent);
+      }
+
+      body {
+        background: var(--bg);
+        font-family: "Montserrat", sans-serif;
+        color: var(--text);
+        margin: 0;
+      }
+
+      /* Auth buttons (Login/Register/Logout) */
+      .btn-auth {
+        border-radius: 5px;
+        border: 1px solid var(--accent);
+        color: var(--accent) !important;
+        background: transparent;
+        padding: 6px 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+        margin-left: 8px;
+        display: inline-block;
+      }
+
+      .btn-auth:hover {
+        background: var(--accent);
+        color: #fff !important;
+        transform: translateY(-1px);
+        text-decoration: none;
+      }
+
+      /* Navbar */
+      .custom-navbar {
+        background: var(--bg);
+        padding: 12px 20px;
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        max-width: 100%;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 25px;
+        color: var(--text) !important;
+        letter-spacing: 1px;
+        padding-left: 6px;
+        margin-right: 18px;
+      }
+
+      /* Regular nav links */
+      .navbar .nav-link {
+        color: var(--text) !important;
+        font-weight: 500;
+        padding: 8px 12px;
+        margin: 0 6px;
+        border-radius: 0;
+        transition: color 0.18s ease, background 0.18s ease;
+      }
+
+      .navbar .nav-link:hover {
+        color: #ffffff !important;
+        background: transparent;
+      }
+
+      /* Toggler (mobile menu) */
+      .navbar-toggler {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 6px 8px;
+        border-radius: 0;
+      }
+
+      .navbar-toggler .navbar-toggler-icon {
+        background-image: none;
+        display: inline-block;
+        width: 22px;
+        height: 2px;
+        background: var(--text);
+        position: relative;
+      }
+      .navbar-toggler .navbar-toggler-icon::before,
+      .navbar-toggler .navbar-toggler-icon::after {
+        content: "";
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--text);
+        position: absolute;
+        left: 0;
+      }
+      .navbar-toggler .navbar-toggler-icon::before {
+        top: -6px;
+      }
+      .navbar-toggler .navbar-toggler-icon::after {
+        top: 6px;
+      }
+
+      /* Remove bootstrap radius from everything */
+      .navbar,
+      .nav,
+      .dropdown-menu,
+      .btn,
+      .form-control {
+        border-radius: 0 !important;
+      }
+
+      @media (min-width: 768px) {
+        .navbar-nav {
+          margin-left: auto;
+        }
+      }
+
+      .navbar-collapse {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg custom-navbar">
+      <a class="navbar-brand" href="/"> 
+        <i class="fa-solid fa-icons"></i> InsightHub
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+
+          <% if (user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/posts/add">Add Post</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/posts">Posts</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn-auth" href="/auth/logout">Logout</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/posts">Posts</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn-auth" href="/auth/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn-auth" href="/auth/register">Register</a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+  </body>
+</html>

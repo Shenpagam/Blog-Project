@@ -1,0 +1,247 @@
+<%- include('partials/header', { title: 'Home', user: user }) %>
+
+<!-- Hero Section -->
+<div
+  class="hero-section text-center d-flex align-items-center justify-content-center vh-100 text-white"
+  style="background-color: #000; position: relative"
+>
+  <div class="container" style="position: relative">
+    <h1 class="display-3 font-weight-bold mb-5" style="color: #ffb84d">
+      Share. Inspire. Connect.
+    </h1>
+    <p class="lead mb-5" style="color: #fff; word-spacing: 5px">
+      Turn your thoughts into stories, and your stories into impact.
+    </p>
+
+    <% if (user) { %>
+    <p class="mb-4">
+      Hello,
+      <span class="username font-weight-bold" style="color: #ffb84d"
+        ><%= user.username %></span
+      >! Welcome back!
+    </p>
+    <a class="btn-auth" href="/user/profile"
+      ><i class="fas fa-user"></i> Go to your profile</a
+    >
+    <% } else { %>
+    <p class="mb-4" style="word-spacing: 5px">
+      Please
+      <a class="btn-auth" href="/auth/login" style="padding: 10px 20px"
+        ><i class="fas fa-sign-in-alt"></i> Login</a
+      >
+      or
+      <a class="btn-auth" href="/auth/register" style="padding: 10px 20px"
+        ><i class="fas fa-user-plus"></i> Register</a
+      >
+      to Continue.
+    </p>
+    <% } %>
+  </div>
+</div>
+
+<!-- Blog Section -->
+<section class="py-5 vh-100 mb-5" style="background-color: #000">
+  <div class="container">
+    <h2
+      class="text-center mb-4 font-weight-bold pb-5"
+      style="color: #ffb84d; font-size: 35px"
+    >
+      Latest Posts
+    </h2>
+    <div class="row g-4">
+      <!-- Blog Card 1 -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-1">
+          <img
+            src="https://img.freepik.com/free-vector/blogging-fun-content-creation-online-streaming-video-blog-young-girl-making-selfie-social-network-sharing-feedback-self-promotion-strategy-vector-isolated-concept-metaphor-illustration_335657-855.jpg"
+            class="mx-auto d-block"
+            alt="Centered Image"
+            style="height: 150px; width: 200px; padding: 10px"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-yellow font-weight-bold">
+              Getting Started with Blogging
+            </h5>
+            <p class="card-text text-dark">
+              Learn how to start your blogging journey with simple steps and
+              useful tips.
+            </p>
+            <a
+              href="#"
+              class="btn btn-home d-flex justify-content-center"
+              style="
+                background-color: #ffb84d;
+                padding: 5px;
+                color: rgb(255, 255, 255);
+              "
+              >Read More</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Card 2 -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-1">
+          <img
+            src="https://miro.medium.com/0*1kem5bXUL3aARIjW"
+            class="mx-auto d-block"
+            alt="Centered Image"
+            style="height: 150px; width: 200px; padding: 10px"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-yellow font-weight-bold">
+              Web Development Trends 2025
+            </h5>
+            <p class="card-text text-dark">
+              Explore the latest tools and frameworks shaping the future of web
+              development.
+            </p>
+            <a
+              href="#"
+              class="btn btn-home d-flex justify-content-center"
+              style="
+                background-color: #ffb84d;
+                padding: 5px;
+                color: rgb(255, 255, 255);
+              "
+              >Read More</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Card 3 -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-2">
+          <img
+            src="https://www.blogtyrant.com/wp-content/uploads/2019/07/draft-a-post.jpg"
+            class="mx-auto d-block"
+            alt="Centered Image"
+            style="height: 150px; width: 200px; padding: 10px"
+          />
+          <div class="card-body">
+            <h5 class="card-title text-warning font-weight-bold">
+              Tips for Writing Better Articles
+            </h5>
+            <p class="card-text text-dark">
+              Improve your writing style, engage your readers, and create
+              impactful posts.
+            </p>
+            <a
+              href="#"
+              class="btn btn-home d-flex justify-content-center"
+              style="
+                background-color: #ffb84d;
+                padding: 5px;
+                color: rgb(255, 255, 255);
+              "
+              >Read More</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<div class="container-fluid mt-1 text-white mb-5" style="padding: 50px">
+  <h2
+    class="text-center font-weight-bold mb-5"
+    style="color: #ffb84d; font-size: 35px"
+  >
+    Application Features
+  </h2>
+  <div class="row">
+    <div class="col-md-4">
+      <div
+        class="card text-center shadow-sm"
+        style="background: #e3b03b; border: 1px solid #ffb84d"
+      >
+        <div class="card-body">
+          <i class="fas fa-lock fa-3x mb-3" style="color: #000000"></i>
+          <h3 class="card-title" style="color: #000000">Authentication</h3>
+          <p class="card-text" style="color: #eddfc9">
+            Securely access your account with our robust authentication system.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div
+        class="card text-center shadow-sm"
+        style="background: #111; border: 1px solid #ffb84d"
+      >
+        <div class="card-body">
+          <i class="fas fa-user-shield fa-3x mb-3" style="color: #ffb84d"></i>
+          <h3 class="card-title" style="color: #fff">Authorization</h3>
+          <p class="card-text text-muted">
+            Control who has access to different parts of the site.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div
+        class="card text-center shadow-sm"
+        style="background: #e3b03b; border: 1px solid #ffb84d"
+      >
+        <div class="card-body">
+          <i class="fas fa-sign-in-alt fa-3x mb-3" style="color: #000000"></i>
+          <h3 class="card-title" style="color: #000000">Login</h3>
+          <p class="card-text" style="color: #eddfc9">
+            Quick and easy login process for returning users.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div
+        class="card text-center shadow-sm"
+        style="background: #111; border: 1px solid #ffb84d"
+      >
+        <div class="card-body">
+          <i class="fas fa-sign-out-alt fa-3x mb-3" style="color: #ffb84d"></i>
+          <h3 class="card-title" style="color: #fff">Logout</h3>
+          <p class="card-text text-muted">
+            Securely log out of your account to protect your data.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div
+        class="card text-center shadow-sm"
+        style="background: #e3b03b; border: 1px solid #ffb84d"
+      >
+        <div class="card-body">
+          <i class="fas fa-comments fa-3x mb-3" style="color: #000000"></i>
+          <h3 class="card-title" style="color: #000000">Comments</h3>
+          <p class="card-text" style="color: #eddfc9">
+            Engage with the community by leaving comments on posts.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div
+        class="card text-center shadow-sm"
+        style="background: #111; border: 1px solid #ffb84d"
+      >
+        <div class="card-body">
+          <i class="fas fa-upload fa-3x mb-3" style="color: #ffb84d"></i>
+          <h3 class="card-title" style="color: #fff">Multiple File Uploads</h3>
+          <p class="card-text text-muted">
+            Easily upload multiple files with our intuitive interface.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,178 @@
+<%- include('partials/header', { title: 'Edit Post', user: user }) %>
+
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-lg border-0" style="background-color: #1a1a1a; border-radius: 14px;">
+        <div class="card-header text-center border-0" style="background: none;">
+          <h1 class="text-warning fw-bold">Update Your Post</h1>
+        </div>
+        <div class="card-body text-white">
+          <form
+            action="/posts/<%= post._id %>?_method=PUT"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <!-- Title -->
+            <div class="mb-3">
+              <input
+                type="text"
+                name="title"
+                id="title"
+                value="<%= post.title %>"
+                required
+                class="custom-input"
+                placeholder="Enter Title"
+              />
+            </div>
+
+            <!-- Content -->
+            <div class="mb-3">
+              <textarea
+                name="content"
+                id="content"
+                rows="8"
+                required
+                class="custom-textarea"
+                placeholder="Write your content..."
+              ><%= post.content %></textarea>
+            </div>
+
+            <!-- Images -->
+            <div class="mb-3">
+              <label for="images" class="form-label text-warning fw-bold">Upload Images</label>
+
+              <!-- Hidden real input -->
+              <input
+                type="file"
+                name="images"
+                id="images"
+                onchange="previewImages(); showFileName();"
+                multiple
+                hidden
+              />
+
+              <!-- Custom button -->
+              <label for="images" class="custom-upload-btn">📁 Choose Files</label>
+              <span id="file-chosen" class="file-chosen">No file chosen</span>
+
+              <!-- Preview newly selected images -->
+              <div class="mt-3 d-flex flex-wrap" id="image-preview"></div>
+
+              <!-- Existing images -->
+              <div class="mt-3">
+                <% post.images.forEach(image => { %>
+                  <img
+                    src="<%= image.url %>"
+                    alt="Post Image"
+                    class="img-thumbnail me-2 mb-2"
+                    style="max-width: 120px; border-radius: 8px;"
+                  />
+                <% }) %>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-4">
+              <button type="submit" class="custom-btn">
+                <i class="fas fa-save"></i> Update Post
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Inputs */
+.custom-input,
+.custom-textarea {
+  width: 100%;
+  background-color: #f9dcb7;
+  color: #000;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 2px solid #000;
+  outline: none;
+}
+.custom-input:focus,
+.custom-textarea:focus {
+  border-color: #ffb84d;
+  box-shadow: 0 0 6px #ffb84d;
+}
+
+/* Custom Upload Button */
+.custom-upload-btn {
+  background-color: #ffb84d;
+  color: #000;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: inline-block;
+}
+.custom-upload-btn:hover {
+  background-color: #ffd700;
+}
+
+/* File chosen text */
+.file-chosen {
+  margin-left: 10px;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* Image preview thumbnails */
+#image-preview img {
+  width: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Update Post Button */
+.custom-btn {
+  background-color: transparent;
+  border: 2px solid #ffb84d;
+  color: #ffb84d;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: 0.3s ease-in-out;
+  padding: 10px 22px;
+}
+.custom-btn:hover {
+  background-color: #ffb84d;
+  color: #000;
+}
+</style>
+
+<script>
+  function previewImages() {
+    const preview = document.getElementById("image-preview");
+    preview.innerHTML = "";
+    const files = document.getElementById("images").files;
+
+    for (let i = 0; i < files.length; i++) {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(files[i]);
+      img.classList.add("img-thumbnail", "me-2", "mb-2");
+      preview.appendChild(img);
+    }
+  }
+
+  function showFileName() {
+    const input = document.getElementById("images");
+    const fileChosen = document.getElementById("file-chosen");
+    if (input.files.length > 0) {
+      fileChosen.textContent = Array.from(input.files)
+        .map(f => f.name)
+        .join(", ");
+    } else {
+      fileChosen.textContent = "No file chosen";
+    }
+  }
+</script>
+
+<%- include('partials/footer') %>

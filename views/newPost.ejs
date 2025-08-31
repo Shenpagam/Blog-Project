@@ -1,0 +1,152 @@
+<%- include('partials/header', { title: 'Add Post', user: user }) %>
+
+<div class="min-vh-100 bg-black d-flex align-items-center justify-content-center py-5">
+  <div class="card shadow-lg border-0 rounded-4" style="max-width: 700px; width: 100%">
+    <!-- Card Header -->
+    <div class="card-header rounded-top-4" style="background-color: #ffb84d; color: #000">
+      <h3 class="mb-0 fw-semibold text-center">
+        <i class="fas fa-plus-circle me-2"></i> Add New Post
+      </h3>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body p-4 border-0" style="background-color: rgb(57, 57, 57); border-radius: 0 0 10px 10px">
+      <p class="lead text-light text-center mb-4">
+        Share your thoughts and updates by creating a new post. You can add images to make your post more engaging.
+      </p>
+
+      <% if (error) { %>
+      <div class="alert alert-danger rounded-3"><%= error %></div>
+      <% } %>
+      <% if (success) { %>
+      <div class="alert alert-success rounded-3"><%= success %></div>
+      <% } %>
+
+      <form action="/posts/add" method="POST" enctype="multipart/form-data">
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label" style="color:#ffb84d; font-weight:600; font-size:18px;">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            id="title"
+            placeholder="Enter post title"
+            required
+            style="background-color:#ffb84d; border:0; color:#000000;"
+          />
+        </div>
+
+        <!-- Content -->
+        <div class="mb-3">
+          <label for="content" class="form-label" style="color:#ffb84d; font-weight:600; font-size:18px;">Content</label>
+          <textarea
+            class="form-control rounded-3"
+            name="content"
+            id="content"
+            rows="5"
+            placeholder="Write your content here..."
+            required
+            style="background-color:#ffb84d; border:0; color:#000;"
+          ></textarea>
+        </div>
+
+        <!-- Images -->
+        <div class="mb-3">
+          <label for="images" class="form-label" style="color:#ffb84d; font-weight:600; font-size:18px;">Upload Images</label>
+          
+          <div class="file-upload">
+            <input
+              type="file"
+              name="images"
+              id="images"
+              onchange="previewImages()"
+              multiple
+            />
+            <label for="images" class="file-upload-label"><i class="fas fa-upload me-2"></i>Choose File</label>
+            <span id="file-chosen">No file chosen</span>
+          </div>
+
+          <div class="mt-3 d-flex flex-wrap gap-2" id="image-preview"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn-addpost shadow-sm">
+            <i class="fas fa-paper-plane me-2"></i>  Publish Post
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Preview multiple images
+  function previewImages() {
+    const preview = document.getElementById("image-preview");
+    const fileChosen = document.getElementById("file-chosen");
+    const files = document.getElementById("images").files;
+
+    preview.innerHTML = "";
+
+    if (files.length > 0) {
+      fileChosen.textContent = files.length + " file(s) selected";
+    } else {
+      fileChosen.textContent = "No file chosen";
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(files[i]);
+      img.classList.add("img-thumbnail");
+      img.style.width = "100px";
+      img.style.height = "100px";
+      img.style.objectFit = "cover";
+      preview.appendChild(img);
+    }
+  }
+</script>
+
+<style>
+  .btn-addpost {
+    border: 2px solid #ffb84d;
+    border-radius: 5px;
+    padding: 8px 20px;
+    background-color: #000;
+    color: #ffb84d;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .btn-addpost:hover {
+    background-color: #ffb84d;
+    color: #000;
+  }
+
+  /* Custom file upload */
+  .file-upload input[type="file"] {
+    display: none;
+  }
+  .file-upload-label {
+    display: inline-block;
+    padding: 8px 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #000;
+    color: #ffb84d;
+    border: 1px solid #ffb84d;
+  }
+  .file-upload-label:hover {
+    background-color: #ffb84d;
+    color: #000;
+  }
+  #file-chosen {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #ffb84d;
+  }
+</style>
+
+<%- include('partials/footer') %>

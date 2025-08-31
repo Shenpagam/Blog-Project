@@ -1,0 +1,153 @@
+<%- include('partials/header', { title, user: user }) %>
+
+<div class="min-vh-100 bg-black d-flex align-items-center justify-content-center py-5">
+  <div class="card shadow-lg border-0 rounded-4" style="max-width: 850px; width: 100%; border-radius: 10px">
+    
+    <!-- Card Header -->
+    <div class="card-header rounded-top-4" style="background-color: #ffb84d; color: #000">
+      <h3 class="mb-0 fw-semibold text-center">
+        <i class="fas fa-file-alt me-2"></i> Post Details
+      </h3>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body p-4 border-0" style="background-color: rgb(57, 57, 57); border-radius: 0 0 10px 10px">
+      
+      <!-- Post Content -->
+      <h1 class="fw-bold mb-2" style="color: #ffb84d;"><%= post.title %></h1>
+      <p class="text-light small mb-3">
+        Posted by <strong><%= post.author.username %></strong> 
+        on <%= post.createdAt.toDateString() %>
+      </p>
+      <p class="fs-5 text-light"><%= post.content %></p>
+
+      <!-- Images -->
+      <% if (post.images.length > 0) { %>
+        <h4 class="mt-4 mb-3" style="color: #ffb84d;">Attached Images</h4>
+        <div class="row">
+          <% post.images.forEach(image => { %>
+            <div class="col-md-6 mb-3 d-flex justify-content-center">
+              <img src="<%= image.url %>" alt="Post Image" 
+                   class="post-img" />
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Post Actions -->
+      <% if (user && user._id.toString() === post.author._id.toString()) { %>
+        <div class="mt-3">
+          <a href="/posts/<%= post._id %>/edit" class="btn-action me-2">
+            <i class="fas fa-edit"></i> Edit
+          </a>
+          <form action="/posts/<%= post._id %>?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="btn-action btn-delete">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- Comments Section -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0 rounded-4" style="overflow: hidden;"> <!-- fix white corners -->
+        
+        <div class="card-header rounded-top-4" style="background-color: #ffb84d; color: #000">
+          <h3 class="mb-0 fw-semibold text-center">
+            <i class="fas fa-comments me-2"></i> Comments
+          </h3>
+        </div>
+
+        <div class="card-body p-4" style="background-color: rgb(57, 57, 57);">
+          <% if (post.comments.length > 0) { %>
+            <ul class="list-group list-group-flush mb-3">
+              <% post.comments.forEach(comment => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-0 mb-2 rounded-3 shadow-sm">
+                  <div>
+                    <strong style="color: #ffb84d;"><%= comment.author.username %></strong>: <%= comment.content %>
+                  </div>
+                  <% if (user && user._id.toString() === comment.author._id.toString()) { %>
+                    <div class="btn-group">
+                      <a href="/comments/<%= comment._id %>/edit" class="btn-action btn-sm me-1">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <form action="/comments/<%= comment._id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn-action btn-delete btn-sm">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </form>
+                    </div>
+                  <% } %>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <p class="text-light fst-italic">No comments yet. Be the first to comment! 🚀</p>
+          <% } %>
+
+          <!-- Add Comment -->
+          <% if (user) { %>
+            <form action="/posts/<%= post._id %>/comments" method="POST">
+              <div class="mb-3">
+                <textarea name="content" rows="3" class="form-control text-dark" placeholder="Write a comment..." required style="background-color: #ffb84d;"></textarea>
+              </div>
+              <button type="submit" class="btn-action">
+                <i class="fas fa-paper-plane me-1"></i> Add Comment
+              </button>
+            </form>
+          <% } else { %>
+            <div class="alert d-flex align-items-center justify-content-between rounded-3 shadow-sm" style="background-color: #222; color: #ffb84d; border: none;">
+              <div>
+                <i class="fas fa-lock me-2"></i>
+                You need to <strong>Login</strong> to add a comment.
+              </div>
+              <a href="/auth/login" class="btn-action btn-sm">Login</a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .post-img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+  .btn-action {
+    border: 2px solid #ffb84d;
+    border-radius: 5px;
+    padding: 6px 15px;
+    background-color: #000;
+    color: #ffb84d;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .btn-action:hover {
+    background-color: #ffb84d;
+    color: #000;
+  }
+  .btn-delete {
+    background-color: #000;
+    border: 2px solid #dc3545;
+    color: #dc3545;
+  }
+  .btn-delete:hover {
+    background-color: #dc3545;
+    color: #fff;
+  }
+</style>
+
+<%- include('partials/footer') %>

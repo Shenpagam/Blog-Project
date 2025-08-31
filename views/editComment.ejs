@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: 'Edit Comment', user: user }) %>
+
+<div class="container mt-5 mb-5 text-white text-center">
+  <h2 class="mb-4 text-warning fw-bold">Update Your Post</h2>
+
+  <form action="/comments/<%= comment._id %>?_method=PUT" method="POST" 
+        class="p-5 rounded mx-auto" 
+        style="background-color: #444444; max-width: 800px;">
+    
+    <div class="mb-3">
+      <textarea
+        class="form-control border-0 mx-auto"
+        id="content"
+        name="content"
+        rows="10"
+        style="background-color: #f7b35a; color: #000; border-radius: 10px; font-size: 1rem; padding: 12px;"
+        required
+      ><%= comment.content %></textarea>
+    </div>
+
+    <button type="submit" 
+      class="btn-edit fw-bold px-5 py-2"
+      style="background-color: #444444; font-size: 15px; font-weight: 800; color: #ffcc00; border: 2px solid #ffcc00; border-radius: 8px;  transition: all 0.3s ease; ">
+      Update
+    </button>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
+
+<style>
+  button.btn-edit:hover {
+    background-color: #ffcc00 !important;
+    color: #ffffff !important;
+  }
+</style>

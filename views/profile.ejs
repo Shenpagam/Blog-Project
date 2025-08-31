@@ -1,0 +1,146 @@
+<%- include('partials/header', { title: 'Profile', user: user }) %>
+
+<div class="min-vh-100 bg-black py-5">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Profile Card -->
+      <div class="col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden" style="background-color: rgb(57,57,57);">
+          <div class="card-header text-center" style="background-color: #ffb84d; color: #000;">
+            <h4 class="fw-semibold mb-0"><i class="fas fa-user-circle me-2"></i> Profile</h4>
+          </div>
+          <div class="card-body text-center">
+            <% if (user.profilePicture && user.profilePicture.url) { %>
+              <img src="<%= user.profilePicture.url %>" 
+                   class="rounded-circle border mb-3" 
+                   style="width: 150px; height: 150px; object-fit: cover;" 
+                   alt="Profile Picture"/>
+            <% } else { %>
+              <img src="https://cdn.pixabay.com/photo/2015/12/13/20/43/doll-1091702_1280.jpg" 
+                   class="rounded-circle border mb-3" 
+                   style="width: 150px; height: 150px; object-fit: cover;" 
+                   alt="Default Profile Picture"/>
+            <% } %>
+
+            <h5 class="fw-bold" style="color: #ffb84d;"><%= user.username %></h5>
+            <p class="text-light"><strong>Email:</strong> <%= user.email %></p>
+            <p class="text-light"><strong>Bio:</strong> <%= user.bio || 'No bio yet.' %></p>
+            <p class="text-light"><strong>Date Joined:</strong> <%= user.createdAt.toDateString() %></p>
+            <p class="text-light"><strong>Posts:</strong> <%= postCount %></p>
+
+            <a href="/user/edit" class="btn-profile-action shadow-sm w-100 mb-2">
+              <i class="fas fa-edit me-2"></i> Edit Profile
+            </a>
+
+            <form action="/user/delete" method="POST">
+              <button type="submit" class="btn-delete-account shadow-sm w-100">
+                <i class="fas fa-trash-alt me-2"></i> Delete Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Posts -->
+      <div class="col-lg-8">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden" style="background-color: rgb(57,57,57);">
+          <div class="card-header" style="background-color: #ffb84d; color: #000;">
+            <h4 class="fw-semibold mb-0"><i class="fas fa-newspaper me-2"></i> Your Posts</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <% if (posts.length > 0) { %>
+                <% posts.forEach(post => { %>
+                  <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0 rounded-3 h-100 overflow-hidden" style="background-color: rgb(70,70,70);">
+                      <% if (post.images && post.images.length > 0) { %>
+                        <img src="<%= post.images[0].url %>" 
+                             class="post-img-top" 
+                             alt="Post Image"/>
+                      <% } else { %>
+                        <img src="https://via.placeholder.com/400x250?text=No+Image" 
+                             class="post-img-top" 
+                             alt="No Image"/>
+                      <% } %>
+                      <div class="card-body">
+                        <h6 class="fw-bold" style="color: #ffb84d;"><%= post.title %></h6>
+                        <p class="text-light small mb-2"><%= post.createdAt.toDateString() %></p>
+                        <a href="/posts/<%= post._id %>" class="btn-post w-100">
+                          <i class="fas fa-book-open me-1"></i> Read More
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p class="text-light text-center">You haven’t created any posts yet. 🚀</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .btn-profile-action {
+    border: 2px solid #ffb84d;
+    border-radius: 6px;
+    padding: 8px 15px;
+    background-color: #000;
+    color: #ffb84d;
+    font-weight: 600;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .btn-profile-action:hover {
+    background-color: #ffb84d;
+    text-decoration: none;
+
+    color: #000;
+  }
+
+  .btn-delete-account {
+    border: 2px solid #dc3545;
+    border-radius: 6px;
+    padding: 8px 15px;
+    background-color: #000;
+    color: #dc3545;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  .btn-delete-account:hover {
+    background-color: #dc3545;
+    color: #fff;
+  }
+
+  .btn-post {
+    border: 2px solid #ffb84d;
+    border-radius: 5px;
+    padding: 6px 12px;
+    background-color: #000;
+    color: #ffb84d;
+    font-weight: 600;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+  }
+  .btn-post:hover {
+    background-color: #ffb84d;
+    text-decoration: none;
+    color: #000;
+  }
+
+  .post-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+</style>
+
+<%- include('partials/footer') %>
